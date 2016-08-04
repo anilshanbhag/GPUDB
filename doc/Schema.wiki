@@ -1,0 +1,30 @@
+#summary Schema Format.
+
+==Introduction==
+
+The schema file is used to check the syntax of the SQL queries and to help generate the C codes to execute the queries on GPU. It is a plain text file, each line of which describes a table structure with the following format:
+
+  _tableName_|_columnName_:_type_|_columnName_:_type_|...
+
+_tableName_ specifies the name of the table.
+
+_columnName_:_type_ specifies the name and type of each table column. Currently we support four data types: *Integer*, *Decimal*, *Date* and *Text*. If the type of the column is Text, another filed needs to be added to illustrate the maximum length of the column. This is shown in the following example.
+
+Note that the schema file is case *insensitive*.
+
+==Example==
+
+SUPPLIER|S_SUPPKEY:INTEGER|S_NAME:TEXT:25|S_ADDRESS:TEXT:25|S_CITY:TEXT:10|
+S_NATION:TEXT:15|S_REGION:TEXT:12|S_PHONE:TEXT:15
+
+The above line describes the data format of the supplier table from Star Schema Benchmark, which has the following columns:
+
+ * S_SUPPKEY with type Integer.
+ * S_NAME with type Text and length 25.
+ * S_ADDRESS with type Text and length 25.
+ * S_CITY with type Text and length 10.
+ * S_NATION with type Text and length 15.
+ * S_REGION with type Text and length 12.
+ * S_PHONE with type Text and length 15.
+
+In the source code, we have included an example schema file of Star Schema Benchmark located at test/ssb_test/ssb.schema .
