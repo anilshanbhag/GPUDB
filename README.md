@@ -3,10 +3,10 @@ GPUDB Start Guide
 
 This is a translator that translates a given SQL query into CUDA codes (executed on NVIDIA GPUs) or OpenCL codes (executed on devices that support OpenCL). You need to:
  
- # Define the schema and generate the raw text-based data.
- # Generate the data loader that transform the raw data into our supported data format.
- # (Optional) Compress the data to obtain better performance.
- # Translate the SQL query and execute the query.
+* Define the schema and generate the raw text-based data.
+* Generate the data loader that transform the raw data into our supported data format.
+* (Optional) Compress the data to obtain better performance.
+* Translate the SQL query and execute the query.
  
 The remaining contents in this guide will explain each step in details.
 All the paths used in the following content are relative to the top directory of the source code.
@@ -87,9 +87,9 @@ Run Length Encoding
 Dictionary Encoding
 -----------------
 
-    Enter src/utility and execute "make dict" to generate the file "dictCompression" to compress the column using dictionary encoding scheme.
+* Enter src/utility and execute "make dict" to generate the file "dictCompression" to compress the column using dictionary encoding scheme.
 
-    Usage: ./dictCompression inputColumn outputColumn. inputColumn specifies the name of the column to be compressed using dictionary encoding scheme, and outputColumn is the name of the generated compressed column.
+* Usage: ./dictCompression inputColumn outputColumn. inputColumn specifies the name of the column to be compressed using dictionary encoding scheme, and outputColumn is the name of the generated compressed column.
 
 Code Generation
 ----------------
