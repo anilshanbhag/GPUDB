@@ -29,20 +29,20 @@ Several configurable variables:
     pinned host memory and data are explicitly transferred. 2 means data are
     stored in pinned host memory and the kernel will directly access the data
     without explicit data transferring. 3 means data are stored in disk and only
-    mapped to host memory.
+    mapped to host memory. 4 means data is stored on the GPU (only on CUDA).
 
     @SOA is currently for testing only.
 """
 
-joinType = 0    
-POS = 0
+joinType = 0
+POS = 4
 CODETYPE = 0
 SOA = 0
 
 """
-OpenCL specific configurable variables: 
+OpenCL specific configurable variables:
     @PID is the platform ID that will execute the query.
-    @DTYPE specifies the type of the device which executes the query. 
+    @DTYPE specifies the type of the device which executes the query.
     0 represents CL_DEVICE_TYPE_GPU,
     1 represnets CL_DEVICE_TYPE_CPU and
     2 represnets CL_DEVICE_TYPE_ACCELERATOR.
