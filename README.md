@@ -100,3 +100,14 @@ Usage: *./translate.py query-file.sql schema-file.schema*
 
 After executing the aforementioned command, enter src/cuda or src/opencl directory and execute "Make gpudb", which will generate an executable file
 named "GPUDATABASE". Executing "./GPUDATABASE --datadir dir" will run the query on GPU. The "datadir" argument specifies where the data are stored.
+
+Config
+------
+
+Configuration flags are in XML2CODE/config.py. Edit them accordingly.
+
+* `CODETYPE` determines whether CUDA or OpenCL codes should be generated. 0 represents CUDA and 1 represents OpenCL.
+
+* `joinType` determines whether we should generate invisible joins for star schema queries. 0 represents normal join and 1 represents invisible join.
+
+* `POS` describes where the data are stored in the host memory and how the codes should be generated. 0 means data are stored in pageable host memory and data are explicitly transferred. 1 means data are stored in pinned host memory and data are explicitly transferred. 2 means data are stored in pinned host memory and the kernel will directly access the data without explicit data transferring. 3 means data are stored in disk and only mapped to host memory.
