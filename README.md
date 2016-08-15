@@ -111,3 +111,9 @@ Configuration flags are in XML2CODE/config.py. Edit them accordingly.
 * `joinType` determines whether we should generate invisible joins for star schema queries. 0 represents normal join and 1 represents invisible join.
 
 * `POS` describes where the data are stored in the host memory and how the codes should be generated. 0 means data are stored in pageable host memory and data are explicitly transferred. 1 means data are stored in pinned host memory and data are explicitly transferred. 2 means data are stored in pinned host memory and the kernel will directly access the data without explicit data transferring. 3 means data are stored in disk and only mapped to host memory. 4 means data is stored in GPU memory (CUDA only).
+
+Profiling
+----------
+
+* Use `nvprof` to get aggregate timings of host <-> device transfers and kernel executions
+* `nvprof --print-gpu-trace` gives the trace of the execution
