@@ -1,0 +1,32 @@
+\section{Introduction}
+
+There is a lot of excitement around using accelerators like GPU and FPGAs to
+accelerate analytics. However, GPUs also have a lot of potential to accelerate
+memory-bound applications like the ones we considered in NVL. There are two main
+contributing factors for why GPU's are appealing now:
+
+\begin{itemize}
+\item The latest generation of GPU's have large amount of memory (the latest K80
+Tesla card has 24GB memory, 3 years ago most papers had graphics card with at
+max 4 GB memory) and significantly higher memory bandwidth than a CPU (CPU
+bandwidth ~ 60 GBps compared to 480 GBps in K80). On a local machine with Titan
+X GPU, we observed a memory bandwidth of 280 GBps on GPU (listed as max 330 GBps
+in device spec) compared to 47GBps on CPU. The PCIe transfer speed is much
+slower. As a result, all the works so far, which had to ship data from CPU to
+GPU, suffered from limited gains as PCIe transfer time becomes the bottleneck.
+The large memory allows us to keep/cache all or a good fraction of the dataset
+on the GPU itself, eliminating the PCIe transfer overhead. 
+
+\item GPUs are becoming commodities. Azure recently launched the N-series which are
+machines with GPUs. The largest of them comes with 2 K80 cards having an
+aggregate of 48GB GPU memory. The price point is $\$2.48ph$ for 24 cores/224GB
+RAM in addition to 2 GPUs. This is comparable to $\$1.83$ for 20 core/140GB RAM
+machine with no GPU. More cards can be stacked, MapD has machines with 8 K80
+cards attached on the same machine. 
+\end{itemize}
+
+Existing work does apples-to-oranges comparison 1) fails to compare against
+optimal implementation of both (applies to optimization to only one side) or
+compares against systems known to be slow 2) fail to exploit the large memory of
+modern GPU to cache data.
+
