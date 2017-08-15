@@ -6,6 +6,41 @@ performance of running project, select, join, group-by and sort operations on th
 GPU versus running them on the CPU. In all cases, we assume that the data is
 already in the device memory.
 
-\section{Project}
+\subsection{Project}
 
+We consider two forms of projection queries: one which involves linear combination 
+of columns (Q1) and one involving user defined function (Q2) as shown below:
+
+\begin{lstlisting}
+Q1: SELECT a$x_1$ + b$x_2$ FROM t;
+Q2: SELECT S(a$x_1$ + b$x_2$) FROM t;
+\end{lstlisting}
+
+$x_1$ and $x_2$ are 4-byte floating point values and $S$ is the sigmoid function ($S(x) = \frac{1}{1+e^{-x}}$).
+\todo{ Talk about CPU SIMD. Vectorized execution. }
+Figure~\ref{fig:projectres} shows the result.
+
+\subsection{Select}
+
+We now turn our attention to a micro-benchmark to test conjunctive selections:
+
+\begin{lstlisting}
+Q1: SELECT COUNT() FROM t WHERE $y_1$ < $v_1$ and $y_2$ < $v_2$
+Q2: SELECT y_3 FROM t WHERE $y_1$ < $v_1$ and $y_2$ < $v_2$
+\end{lstlisting}
+
+Graph brbr/brnonbr/nonbrnonbr CPU/GPU varying sel Q1
+
+Graph brbr/brnonbr/nonbrnonbr CPU/GPU varying sel Q2
+
+$y_i$ is a decimal represented as a 4-byte integer. 
+
+\subsection{Join}
+
+
+
+\subsection{Group-By}
+
+
+\subsection{Sort}
 
