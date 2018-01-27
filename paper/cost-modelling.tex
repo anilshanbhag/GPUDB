@@ -1,0 +1,64 @@
+\section{Cost Modelling}
+
+It turns out Tensorflow does not have any cost model. Atleast there is no such
+thing in the public release. User has to manually place computation on different
+devices. There has been some work on cost modelling of relational operators for
+GPU operators \cite{gpudb}. This was relatively easy due to the small number of
+operators. For arbitrary operators, it can possibly be done but would require
+much more work.
+
+\subsection{Selection}
+
+Symbols:
+
+\begin{itemize}[label={},noitemsep]
+\item $B_r$ - read bandwidth of global memory
+\item $B_w$ - write bandwidth of global memory
+\item $C_r$ - read segment size of global memory
+\item $C_w$ - write segment size of global memory
+\item $W$ - number of threads in the thread group
+\item $\norm{R}$ - cardinality of table R
+\item $n$ - number of projected columns
+\item $K_i$ - attribute size of the ith projected column
+\item $m$ - number of predicate columns
+\item $P_i$ - the attribute size of the ith predicate columns
+\item $r$ - selectivity of the predicates
+\end{itemize}
+
+\noindent \textbf{Old Model}: Scan and write out filter per column with predicate
+\begin{align*}
+T_1 &= \sum_{i=1}^{m} ( \ceil{\frac{P_i W}{C_r}} + \ceil{\frac{4 W}{C_r}} ) \times \frac{\norm{R}}{W} \times \frac{C_r}{B_r}  +  \sum_{i=1}^{m} \ceil{\frac{4 W}{C_w}} \times \frac{R}{W} \times \frac{C_w}{B_w}
+\end{align*}
+Read the filter and write results to global memory.
+\begin{align*}
+T_2 &= \sum_{i=1}^{n} (\ceil{\frac{4 W}{C_r}} + \ceil{\frac{K_i}{4}}) \times \frac{\norm{R}}{W} \times \frac{C_r}{B_r} + \norm{R} \times r \times \sum_{i=1}^{n} \ceil{\frac{K_i}{4}} \times \frac{C_w}{B_w}
+\end{align*}
+
+\noindent \textbf{New Model}: Scan all the columns and write out the filter
+\begin{align*}
+T_1 &= \sum_{i=1}^{m} \ceil{\frac{P_i W}{C_r}} \times \frac{\norm{R}}{W} \times \frac{C_r}{B_r}  +  \ceil{\frac{4 W}{C_w}} \times \frac{R}{W} \times \frac{C_w}{B_w}
+\end{align*}
+Read the filter and write results to global memory.
+\begin{align*}
+T_2 &= (\ceil{\frac{4 W}{C_r}} + \sum_{i=1}^{n} \ceil{\frac{K_i}{4}}) \times \frac{\norm{R}}{W} \times \frac{C_r}{B_r} + \sum_{i=1}^{n} \ceil{\frac{r R K_i}{C_w}} \times \frac{C_w}{B_w}
+\end{align*}
+
+\noindent \textbf{CPU Model}:
+
+%\begin{center}
+%\begin{tabu} to \textwidth { |X| X| X| }
+ %\hline
+ %Old Model & New Model & CPU Model \\ 
+ %\hline
+
+
+
+
+ %& cell5 
+
+ %& cell6 \\  
+ %\hline
+ %cell7 & cell8 & cell9 \\ 
+ %\hline
+%\end{tabu}
+%\end{center}
