@@ -1,5 +1,9 @@
 loader: load.c
 	gcc -o gpuDBLoader load.c
+
+loaderM: load_modified.c
+	gcc -o gpuDBLoaderM load_modified.c
+
 sort: columnSort.c
 	gcc -o columnSort columnSort.c -std=c99 
 
